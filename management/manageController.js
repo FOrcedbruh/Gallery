@@ -85,6 +85,13 @@ class controller {
             return res.json({message: 'Ошибка'})
         }
     }
+
+    async getPictures(req, res) {
+        
+        const pictures = await Picture.find();
+
+        res.json(pictures);
+    }
 }
 
 module.exports = new controller();

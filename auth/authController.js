@@ -74,6 +74,27 @@ class controller {
             res.status(400).json({message: 'Ошибка авторизации'});
         }
     }
+
+    async decodeToken(req, res) {
+        try {
+            const { token } = req.body;
+
+            jwt.verify(token, secret, (err, decoded) => {
+                const data = decoded;
+
+                res.json(data);
+            })
+
+
+
+
+        } catch(e) {
+            console.log(e);
+        }
+
+
+
+    }
 }
 
 module.exports = new controller();
