@@ -75,25 +75,17 @@ class controller {
         }
     }
 
-    async decodeToken(req, res) {
+    async setAvatar(req, res) {
         try {
-            const { token } = req.body;
+            const { avatar, username} = req.body;
 
-            jwt.verify(token, secret, (err, decoded) => {
-                const data = decoded;
+            await User.updateOne({username}, {$set: {avatar: avatar}});
 
-                res.json(data);
-            })
-
-
-
-
-        } catch(e) {
+            res.json({message: 'Аватар успещно обновлен'});
+        } catch (e) {
             console.log(e);
+            res.json({message: 'Аватар не установлен'});
         }
-
-
-
     }
 }
 

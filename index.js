@@ -2,9 +2,9 @@ const express = require('express');
 const cors = require("cors");
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const User = require('./models/User');
 const authRouter = require('./auth/authRouter');
 const manageRouter = require('./management/manageRouter');
+
 
 const PORT = 8080;
 
@@ -22,6 +22,7 @@ app.use('/manage', manageRouter);
 app.get('/', (req, res) => {
     res.send('Hello, go to another routes for work:)');
 });
+
 
 
 

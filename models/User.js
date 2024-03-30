@@ -47,7 +47,11 @@ const User = new Schema({
         type: String,
         required: true
     },
-    folders: [FolderSchema]
+    folders: [FolderSchema],
+    avatar: {
+        type: String,
+        required: false
+    }
 })
 
 

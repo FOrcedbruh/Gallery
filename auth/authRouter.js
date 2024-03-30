@@ -4,8 +4,7 @@ const authRouter = express.Router();
 
 authRouter.post('/registration', controller.registration);
 authRouter.post('/login', controller.login);
-authRouter.post('/getData', controller.decodeToken);
-
+authRouter.post('/setAvatar', controller.setAvatar);
 
 module.exports = authRouter;
 

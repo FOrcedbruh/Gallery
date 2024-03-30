@@ -1,5 +1,7 @@
 const User = require('./../models/User');
 const Picture = require('./../models/Picture');
+const multer = require('multer');
+
 
 
 
@@ -91,6 +93,22 @@ class controller {
         const pictures = await Picture.find();
 
         res.json(pictures);
+    }
+
+
+    async getFolders(req, res) {
+        try {
+            const { _id } = req.body;
+
+            const user = await User.findById({_id});
+
+            const folders = user.folders;
+
+            res.json(folders);
+        } catch (e) {
+            console.log(e);
+            res.json({message: 'Ошибка'})
+        }
     }
 }
 
