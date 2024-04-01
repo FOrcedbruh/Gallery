@@ -5,14 +5,13 @@ const mongoose = require('mongoose');
 const authRouter = require('./auth/authRouter');
 const manageRouter = require('./management/manageRouter');
 
-
 const PORT = 8080;
 
 
 const app = express();
 
-app.use(express.urlencoded());
-app.use(express.json());
+app.use(express.urlencoded({ limit: '50mb'}));
+app.use(express.json({limit: '50mb'}));
 app.use(cors());
 dotenv.config();
 app.use('/auth', authRouter);
@@ -23,12 +22,7 @@ app.get('/', (req, res) => {
     res.send('Hello, go to another routes for work:)');
 });
 
-
-
-
 const db_url = process.env.MONGO_URL;
-
-
 
 
 const start = () => {

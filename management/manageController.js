@@ -1,7 +1,6 @@
 const User = require('./../models/User');
 const Picture = require('./../models/Picture');
-const multer = require('multer');
-
+const path = require('path');
 
 
 
@@ -37,28 +36,19 @@ class controller {
 
     async addPicture(req, res) {
         try{
-            const { title, url, _id, description, folderTitle } = req.body;
-
-            const picture = {
-                title,
-                url,
-                description
-            }
-
-            const user = await User.findById(_id);
-
-            const folder = user.folders.find(folder => folder.title === folderTitle);
-
-            folder.pictures.push(picture);
-        
-            await user.save();
-
-            return res.json({message: 'Картинка успешно добавлена'});
-
+            const file = req.file;
+            res.send(file);
         } catch(e) {
             console.log(e);
             res.json({message: 'Ошибка добавления картинки'})
         }
+    }
+    async getPictures(req, res) {
+        const picName = req.params.picName;
+
+        const picPath = path.join(__dirname, "../pictures", picName);
+
+        res.sendFile(picPath);
     }
 
     async postPicture(req, res)  {
@@ -86,13 +76,6 @@ class controller {
             console.log(e);
             return res.json({message: 'Ошибка'})
         }
-    }
-
-    async getPictures(req, res) {
-        
-        const pictures = await Picture.find();
-
-        res.json(pictures);
     }
 
 
