@@ -36,8 +36,38 @@ class controller {
 
     async addPicture(req, res) {
         try{
+            const { _id, folderName, title, description} = req.body;
+
+            console.log(_id, folderName);
             const file = req.file;
-            res.send(file);
+
+            const url = `http:localhost:8080/manage/getPictures/${file.filename}`;
+
+            const user = await User.findById(_id);
+
+            const folders = user.folders;
+
+            const currentFolder = folders.filter(folder => folder.title === folderName);
+
+            if (!currentFolder) {
+                return res.json({
+                    message: 'Такой папки не существует'
+                })
+            } else {
+                 const pictures = currentFolder[0].pictures;
+
+                 pictures.push({
+                    url,
+                    title,
+                    description
+                 });
+
+                await user.save();
+
+                return res.json({
+                    message: `Картинка успешно доюавлена в папку ${folderName}`, file
+                })
+            }
         } catch(e) {
             console.log(e);
             res.json({message: 'Ошибка добавления картинки'})
